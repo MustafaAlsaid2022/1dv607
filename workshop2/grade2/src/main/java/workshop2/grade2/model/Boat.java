@@ -1,25 +1,43 @@
 package workshop2.grade2.model;
 
 public class Boat {
-	
 
-	public Object getType() {
-		// TODO Auto-generated method stub
-		return null;
+	private double boatLength;
+
+	public enum BoatType {
+		Sailboat, Motorsailer, Canoe, Other
 	}
 
-	public void setType(Object type) {
-		// TODO Auto-generated method stub
-		
+	private BoatType type;
+
+	public Boat(double length, BoatType type) {
+		setBoatLength(length);
+		this.type = type;
+
 	}
 
-	public Object getLength() {
-		// TODO Auto-generated method stub
-		return null;
+	public Boat() {
+
 	}
 
-	public void setLength(Object length) {
-		// TODO Auto-generated method stub
-		
+	public double getBoatLength() {
+		return boatLength;
 	}
+
+	public void setBoatLength(double boatLength) {
+		if (boatLength <= 0.0) {
+			throw new ArithmeticException("You have inserted an invalid value");
+		}
+		this.boatLength = boatLength;
+
+	}
+
+	public BoatType getType() {
+		return type;
+	}
+
+	public void setType(BoatType type) {
+		this.type = type;
+	}
+
 }
