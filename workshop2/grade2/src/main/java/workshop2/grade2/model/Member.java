@@ -13,7 +13,7 @@ public class Member {
 	public void updateBoat(Boat old, Boat nw) {
 		Boat boat = boats.get(boats.indexOf(old));
 		boat.setType(nw.getType());
-		boat.setLength(nw.getLength());
+		boat.setBoatLength(nw.getBoatLength());
 	}
 
 	public void deleteBoat(Boat boat) {
