@@ -14,6 +14,17 @@ public class Register {
 		memberList=new ArrayList<Member>();
 
 	}
+	
+	
+	public ArrayList<Member> getMemberList() { 
+			return new ArrayList<Member>(memberList); 
+		} 
+	
+	public int getMemberNumber() { 
+		return memberList.size();
+			} 
+
+
 
 	public void addMember(Member member) {
 		memberList.add(member);
@@ -43,11 +54,7 @@ public class Register {
 		Collections.sort(this.memberList, new Comparator<Member>() {
 			
 			public int compare(Member first, Member second) {
-				if (first == null) {
-					System.out.println("first null");
-				} else if (second == null) {
-					System.out.println("second null");
-				}
+				
 				return first.getId() - second.getId();
 			}
 		});

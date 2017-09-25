@@ -19,7 +19,7 @@ public class Member {
 	private String personalNumber;
 	private ArrayList<Boat> boatList;
 	private boolean hasUnsavedChanges;
-
+	
 	public Member(int id, String name, String personalNumber) {
 		this.id = id;
 		this.name = name;
