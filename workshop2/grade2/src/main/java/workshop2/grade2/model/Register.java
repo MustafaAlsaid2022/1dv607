@@ -1,30 +1,35 @@
 package workshop2.grade2.model;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import workshop2.grade2.model.Boat.BoatType;
+
 
 public class Register {
 
-	private List<Member> members;
+	private ArrayList<Member>memberList;
 
 	public Register() {
+		memberList=new ArrayList<Member>();
 
 	}
 
 	public void addMember(Member member) {
-		members.add(member);
+		memberList.add(member);
 	}
 
 	public void updateMember(Member old, Member nw) {
-		Member member = members.get(members.indexOf(old));
+		Member member = memberList.get(memberList.indexOf(old));
 		member.setName(nw.getName());
 	}
 
 	public void deleteMember(Member member) {
-		members.remove(member);
+		memberList.remove(member);
 	}
 
-	public void addBoat(Member member, Boat boat) {
-		member.addBoat(boat);
+	public void addBoat(Member member, double length, BoatType type) {
+		member.addBoat(length,type);
 	}
 	
 	public void updateBoat(Member member, Boat old, Boat nw) {
@@ -34,4 +39,20 @@ public class Register {
 	public void deleteBoat(Member member, Boat boat) {
 		member.deleteBoat(boat);
 	}
+	public int getMaxId() {
+		Collections.sort(this.memberList, new Comparator<Member>() {
+			
+			public int compare(Member first, Member second) {
+				if (first == null) {
+					System.out.println("first null");
+				} else if (second == null) {
+					System.out.println("second null");
+				}
+				return first.getId() - second.getId();
+			}
+		});
+		return this.memberList.isEmpty() ? 1
+				: this.memberList.get(this.memberList.size() - 1).getId() + 1;
+	}
 }
+	

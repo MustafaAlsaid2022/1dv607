@@ -1,5 +1,11 @@
 package workshop2.grade2.model;
 
+/**
+ * @author Mustafa Alsaid
+ * @version 0.00.00
+ * @name Boat.java
+ */
+
 public class Boat {
 
 	private double boatLength;
