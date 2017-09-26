@@ -19,11 +19,6 @@ public class Boat {
 	public Boat(double length, BoatType type) {
 		setBoatLength(length);
 		this.type = type;
-
-	}
-
-	public Boat() {
-
 	}
 
 	public double getBoatLength() {
@@ -31,11 +26,7 @@ public class Boat {
 	}
 
 	public void setBoatLength(double boatLength) {
-		if (boatLength <= 0.0) {
-			throw new ArithmeticException("You have inserted an invalid value");
-		}
 		this.boatLength = boatLength;
-
 	}
 
 	public BoatType getType() {
@@ -45,5 +36,4 @@ public class Boat {
 	public void setType(BoatType type) {
 		this.type = type;
 	}
-
 }

@@ -1,81 +1,64 @@
-package View;
+package workshop2.grade2.view;
 
 import java.util.Scanner;
-import java.util.Vector;
+import workshop2.grade2.model.Member;
+import workshop2.grade2.model.Register;
 
-import Model.Member;
-import Model.Register;
-
-public class View implements BoatView, MemberView {
+public class View {
 
 	private Register register;
+	private Scanner scan;
+
+	public View() {
+		register = new Register();
+		scan = new Scanner(System.in);
+	}
 
 	public void start() {
-		Scanner scan = new Scanner(System.in);
-
-		while (true && !false) {
-			System.out.print("> ");
-			if (!analyseSentence(scan.nextLine()))
-				return;
-		}
-	}
-
-	private boolean analyseSentence(String line) {
-		Vector<String> args = this.extractArgs(line);
-
-		switch (args.elementAt(0)) {
-		case "list":
-			switch (args.elementAt(1)) {
-			case "compact":
-				this.memberListCompact();
-				return true;
-
-			case "verbose":
-				this.memberListVerbose();
-				return true;
+		while (true) {
+			System.out.println("Press 1 for adding member");
+			System.out.println("Press 2 for compact list");
+			System.out.print("Press q for quit \n>");
+			String input = scan.next();
+			switch (input) {
+			case "1":
+				addMember();
+				break;
+			case "2":
+				displayCompactList();
+				break;
+			case "q":
+				register.save();
+				System.exit(1);
+			default:
+				System.out.println("Invalid");
 			}
-			break;
-		case "add":
-			
-			break;
-			
-		case "exit":
-			System.out.println("===  END  ===");
-			return false;
 		}
-	return true;
+	}
+
+	public void addMember() {
+		register.addMember(new Member(getInput("Name: "), getInput("Personal Number: ")));
+		displaySuccess("Member added succesfully");
+		return;
+	}
+
+	public void displayCompactList() {
+		for (int i = 0; i < register.getMemberList().size(); i++) {
+			System.out.println(register.getMemberList().get(i));
+		}
+		return;
+	}
+
+	private String getInput(String output) {
+		String input = "";
+		while (input.trim().isEmpty()) {
+			System.out.print(output);
+			input = scan.next() + scan.nextLine();
+		}
+		return input;
+	}
 	
-	}
-
-	private Vector<String> extractArgs(String line) {
-		Vector<String> args = new Vector<String>();
-		StringBuffer buffer = new StringBuffer();
-		int cursor = 0;
-
-		while (cursor < line.length()) {
-			while (cursor < line.length() && line.charAt(cursor) != ' ')
-				buffer.append(line.charAt(cursor++));
-			cursor++;
-			args.add(buffer.toString());
-			buffer.delete(0, buffer.length());
-		}
-		return args;
-	}
-
-	@Override
-	public void addMember(String name, int id) {
-
-	}
-
-	@Override
-	public void memberListVerbose() {
-		System.out.println("verbose");
-
-	}
-
-	@Override
-	public void memberListCompact() {
-		System.out.println("compact");
-
+	private void displaySuccess(String msg) {
+		System.out.println("****** " + msg + " *******");
 	}
 }

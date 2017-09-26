@@ -18,20 +18,18 @@ public class Member {
 	private String name;
 	private String personalNumber;
 	private ArrayList<Boat> boatList;
-	private boolean hasUnsavedChanges;
+
 	
-	public Member(int id, String name, String personalNumber) {
-		this.id = id;
+	public Member(String name, String personalNumber) {
 		this.name = name;
 		this.personalNumber = personalNumber;
 		boatList = new ArrayList<Boat>();
-
 	}
-
-	public Member() {
-		boatList = new ArrayList<Boat>();
+	
+	public void setId(int id) {
+		this.id = id;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Member [ ID:" + id + " , Name:" + name + " , PersonalNumber:" + personalNumber + "]";
@@ -43,7 +41,6 @@ public class Member {
 
 	
 	public String getName() {
-
 		return name;
 	}
 
@@ -53,7 +50,6 @@ public class Member {
 	}
 
 	public String getPersonalNumber() {
-
 		return personalNumber;
 	}
 
@@ -81,17 +77,9 @@ public class Member {
 	public int getBoatNumber() {
 		return boatList.size();
 	}
-	
-	public boolean getHasUnsavedChanges() {
-		return hasUnsavedChanges;
-	}
-	
-	public void setHasUnsavedChanges(boolean unsavedChanges) {
-		hasUnsavedChanges = unsavedChanges;
-	}
 
-	public void addBoat(double length, BoatType type) {
-		boatList.add(new Boat(length, type));
+	public void addBoat(Boat boat) {
+		boatList.add(boat);
 	}
 
 	public void updateBoat(Boat old, Boat nw) {
