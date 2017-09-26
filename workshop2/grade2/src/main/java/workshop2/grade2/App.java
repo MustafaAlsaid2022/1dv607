@@ -1,12 +1,9 @@
-package workshop2.grade2;
-
-import workshop2.grade2.view.IView;
-import workshop2.grade2.view.View;
+import View.BoatView;
+import View.View;
 
 public class App {
-	
 	public static void main(String[] args) {
-		IView view = new View();
-		view.start();
+		BoatView view = new View();
+		((View) view).start();
 	}
 }
