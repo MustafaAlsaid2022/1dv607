@@ -27,3 +27,10 @@ workshop2/grade2/\.project
 
 workshop2/grade2/\.settings/
 /.metadata/
+/.recommenders/
+
+workshop2/grade2/RemoteSystemsTempFiles/
+
+workshop2/grade2/src/main/java/workshop2/\.project
+
+workshop2/RemoteSystemsTempFiles/

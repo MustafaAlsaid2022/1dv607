@@ -9,6 +9,7 @@ import java.util.Properties;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import workshop2.grade2.model.Member;
 import workshop2.grade2.model.Register;
 
 /**
@@ -39,7 +40,6 @@ public class FileHandler {
 		return (Register) un.unmarshal(file);
 	}
 
-	
 	public void writeXML(Register member, File file) throws Exception {
 		JAXBContext context = JAXBContext.newInstance(Member.class);
 		Marshaller m = context.createMarshaller();
@@ -54,16 +54,10 @@ public class FileHandler {
 		}
 	}
 	
-	public String readProperty(String key, String defaultVal) throws IOException {
-		
+	public String readProperty(String key, String defaultVal) throws IOException {		
 		try (InputStream in = new FileInputStream(configFile)) {
 			configProperties.load(in);
 		}
-		
 		return configProperties.getProperty(key, defaultVal);
 	}
-	
-	
-	
-
 }
