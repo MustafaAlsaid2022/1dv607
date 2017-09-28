@@ -1,6 +1,8 @@
 package workshop2.grade2.view;
 
 import java.util.Scanner;
+
+import workshop2.grade2.io.FileHandler;
 import workshop2.grade2.model.Member;
 import workshop2.grade2.model.Register;
 
@@ -10,7 +12,11 @@ public class View {
 	private Scanner scan;
 
 	public View() {
-		register = new Register();
+		try {
+			register = new FileHandler().readXML();
+		} catch (Exception e) {
+			register = new Register();
+		}
 		scan = new Scanner(System.in);
 	}
 
@@ -28,7 +34,12 @@ public class View {
 				displayCompactList();
 				break;
 			case "q":
-				register.save();
+				try {
+					new FileHandler().writeXML(register);
+					displayMessage("*** Data saved!! ***");
+				} catch (Exception e) {
+					displayMessage("*** Could not save data!! ***");
+				}
 				System.exit(1);
 			default:
 				System.out.println("Invalid");
@@ -36,9 +47,16 @@ public class View {
 		}
 	}
 
-	public void addMember() {
-		register.addMember(new Member(getInput("Name: "), getInput("Personal Number: ")));
-		displaySuccess("Member added succesfully");
+	public void addMember()  {
+		Member m = new Member();
+		m.setName(getInput("Name: "));
+		try {
+			m.setPersonalNumber(getInput("Personal Number: "));
+		} catch (Exception e) {
+			displayMessage("you have inserted an invalid persona number");
+		}
+		register.addMember(m);
+		displayMessage("Member added succesfully");
 		return;
 	}
 
@@ -58,7 +76,7 @@ public class View {
 		return input;
 	}
 	
-	private void displaySuccess(String msg) {
+	private void displayMessage(String msg) {
 		System.out.println("****** " + msg + " *******");
 	}
 }

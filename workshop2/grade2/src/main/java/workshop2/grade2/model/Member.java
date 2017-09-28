@@ -3,33 +3,30 @@ package workshop2.grade2.model;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import workshop2.grade2.model.Boat.BoatType;
+import javax.xml.bind.annotation.*;
 
 /**
  * @author Mustafa Alsaid
  * @version 0.00.00
  * @name Member.java
  */
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Member {
 
 	private int id;
 	private String name;
 	private String personalNumber;
+	@XmlElement(name="boat")
 	private ArrayList<Boat> boatList;
 
-	
-	public Member(String name, String personalNumber) {
-		this.name = name;
-		this.personalNumber = personalNumber;
+	public Member() {
 		boatList = new ArrayList<Boat>();
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Member [ ID:" + id + " , Name:" + name + " , PersonalNumber:" + personalNumber + "]";
@@ -39,7 +36,6 @@ public class Member {
 		return id;
 	}
 
-	
 	public String getName() {
 		return name;
 	}
@@ -60,20 +56,19 @@ public class Member {
 		df.parse(firstPart);
 
 		String secondPart = personalNumber.substring(6, personalNumber.length());
-		isCorrect(personalNumber,secondPart);
+		isCorrect(personalNumber, secondPart);
 		this.personalNumber = personalNumber;
 
 	}
-	
+
 	public ArrayList<Boat> getBoatList() {
 		return boatList;
 	}
 
-	
 	public void setList(ArrayList<Boat> boatList) {
 		this.boatList = boatList;
 	}
-	
+
 	public int getBoatNumber() {
 		return boatList.size();
 	}
@@ -90,7 +85,7 @@ public class Member {
 
 	public void deleteBoat(Boat boat) {
 		boatList.remove(boat);
-	}	
+	}
 
 	private void isCorrect(String personalNumber, String second) throws Exception {
 		int[] arrayId = new int[personalNumber.length()];
@@ -98,7 +93,7 @@ public class Member {
 			int convert = Integer.parseInt(personalNumber);
 			arrayId[i] = convert;
 		}
-		
+
 		String msg = "You have inserted an invaled personal number";
 		if (second.length() != 4)
 			throw new ArithmeticException(msg);
@@ -120,7 +115,7 @@ public class Member {
 			checkSum = checkSum % 10;
 		}
 		if (arrayId[arrayId.length - 1] != checkSum) // if last digit equal checksum the the id is correct
-			throw new ArithmeticException(msg);  
+			throw new ArithmeticException(msg);
 
 	}
 }

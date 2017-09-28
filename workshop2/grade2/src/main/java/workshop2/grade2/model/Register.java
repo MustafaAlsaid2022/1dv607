@@ -3,11 +3,14 @@ package workshop2.grade2.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import javax.xml.bind.annotation.*;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Register {
 
+	@XmlElement(name="member")
 	private ArrayList<Member> memberList;
-
 	
 	public Register() {
 		memberList = new ArrayList<Member>();
@@ -58,9 +61,5 @@ public class Register {
 			}
 		});
 		return this.memberList.isEmpty() ? 1 : this.memberList.get(this.memberList.size() - 1).getId() + 1;
-	}
-
-	public void save() {
-		// TODO Auto-generated method stub
 	}
 }

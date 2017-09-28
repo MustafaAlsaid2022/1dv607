@@ -1,11 +1,15 @@
 package workshop2.grade2.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 /**
  * @author Mustafa Alsaid
  * @version 0.00.00
  * @name Boat.java
  */
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Boat {
 
 	private double boatLength;
@@ -15,11 +19,6 @@ public class Boat {
 	}
 
 	private BoatType type;
-
-	public Boat(double length, BoatType type) {
-		setBoatLength(length);
-		this.type = type;
-	}
 
 	public double getBoatLength() {
 		return boatLength;
