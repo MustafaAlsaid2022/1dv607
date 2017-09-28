@@ -1,6 +1,7 @@
 package workshop2.grade2.model;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.*;
@@ -49,14 +50,13 @@ public class Member {
 		return personalNumber;
 	}
 
-	public void setPersonalNumber(String personalNumber) throws Exception {
+	public void setPersonalNumber(String personalNumber) throws ParseException  {
 		String firstPart = personalNumber.substring(0, 6);
 		DateFormat df = new SimpleDateFormat("yyMMdd");
 		df.setLenient(false);
 		df.parse(firstPart);
 
-		String secondPart = personalNumber.substring(6, personalNumber.length());
-		isCorrect(personalNumber, secondPart);
+		
 		this.personalNumber = personalNumber;
 
 	}
@@ -87,35 +87,5 @@ public class Member {
 		boatList.remove(boat);
 	}
 
-	private void isCorrect(String personalNumber, String second) throws Exception {
-		int[] arrayId = new int[personalNumber.length()];
-		for (int i = 0; i < personalNumber.length(); i++) {
-			int convert = Integer.parseInt(personalNumber);
-			arrayId[i] = convert;
-		}
-
-		String msg = "You have inserted an invaled personal number";
-		if (second.length() != 4)
-			throw new ArithmeticException(msg);
-		for (int i = 0; i < second.length(); i++) {
-			char ch = second.charAt(i);
-			if (!Character.isDigit(ch))
-				throw new ArithmeticException(msg);
-		}
-		int sum = 0;
-		for (int i = 0; i <= arrayId.length - 2; i += 2) { // sum equation for odd digits//
-			int temp = ((arrayId[i] * 2) % 10) + ((arrayId[i] * 2) / 10);
-			sum = sum + temp;
-		}
-		for (int i = 1; i <= arrayId.length - 2; i += 2) { // sum equation for even digits excluding the last digit//
-			sum = sum + arrayId[i]; // add the two sums together//
-		}
-		int checkSum = 10 - (sum % 10); // checksum procedure//
-		if (checkSum == 10) {
-			checkSum = checkSum % 10;
-		}
-		if (arrayId[arrayId.length - 1] != checkSum) // if last digit equal checksum the the id is correct
-			throw new ArithmeticException(msg);
-
-	}
+	
 }

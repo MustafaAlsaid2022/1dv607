@@ -42,7 +42,7 @@ public class View {
 				}
 				System.exit(1);
 			default:
-				System.out.println("Invalid");
+				displayMessage("you have inserted an invalid value");
 			}
 		}
 	}
