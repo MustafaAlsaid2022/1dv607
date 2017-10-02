@@ -1,5 +1,6 @@
 package workshop2.grade2.model;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,6 +20,14 @@ public class Register {
 	public ArrayList<Member> getMemberList() {
 		return memberList;
 	}
+	
+	public Member getMemberByID(int id) throws NullPointerException {
+		for (Member m : this.memberList)
+			if (m.getId()== id)
+				return m;	
+		throw new NullPointerException("you have inserted an invalid id");
+	}
+	
 
 	public int getMemberNumber() {
 		return memberList.size();
@@ -29,9 +38,10 @@ public class Register {
 		memberList.add(member);
 	}
 
-	public void updateMember(Member old, Member nw) {
+	public void updateMember(Member old, Member nw) throws ParseException {
 		Member member = memberList.get(memberList.indexOf(old));
 		member.setName(nw.getName());
+		member.setPersonalNumber(nw.getPersonalNumber());
 	}
 
 	public void deleteMember(Member member) {

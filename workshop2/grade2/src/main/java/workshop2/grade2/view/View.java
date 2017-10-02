@@ -1,8 +1,10 @@
 package workshop2.grade2.view;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 import workshop2.grade2.io.FileHandler;
+import workshop2.grade2.model.Boat;
 import workshop2.grade2.model.Member;
 import workshop2.grade2.model.Register;
 
@@ -20,11 +22,20 @@ public class View {
 		scan = new Scanner(System.in);
 	}
 
-	public void start() {
+	public void start() throws ParseException {
 		while (true) {
-			System.out.println("Press 1 for adding member");
+			
+			System.out.println();
+			System.out.println("Press 1 for adding a member");
 			System.out.println("Press 2 for compact list");
-			System.out.print("Press q for quit \n>");
+			System.out.println("press 3 for verbose list");
+			System.out.println("press 4 for adding a boat");
+			System.out.println("press 5 for updating a boat");
+			System.out.println("press 6 for deleting a boat");
+			System.out.println("press 7 for updating a member");
+			System.out.println("press 8 for deleting a member");
+			System.out.println("press 9 to save data");
+			System.out.print("Press q for quit\n>");
 			String input = scan.next();
 			switch (input) {
 			case "1":
@@ -33,13 +44,38 @@ public class View {
 			case "2":
 				displayCompactList();
 				break;
-			case "q":
+			case "3":
+				displayVerboseList();
+				break;
+			case "4":
+				displayCompactList();
+				addBoat();
+				break;
+			case"5":
+				displayCompactList();
+				//updateBoat();
+				break;
+			case"6":
+				displayCompactList();
+				//deleteBoat();
+				break;
+			case "7":
+				displayCompactList();
+				updateMember();
+				break;
+			case "8":
+				displayCompactList();
+				deleteMember();
+				break;
+			case "9":
 				try {
 					new FileHandler().writeXML(register);
 					displayMessage("*** Data saved!! ***");
 				} catch (Exception e) {
 					displayMessage("*** Could not save data!! ***");
 				}
+				break;
+			case "q":
 				System.exit(1);
 			default:
 				displayMessage("you have inserted an invalid value");
@@ -47,24 +83,122 @@ public class View {
 		}
 	}
 
-	public void addMember()  {
-		Member m = new Member();
-		m.setName(getInput("Name: "));
+	public void addMember() {
+		Member member = new Member();
+		member.setName(getInput("Name: "));
 		try {
-			m.setPersonalNumber(getInput("Personal Number: "));
+			member.setPersonalNumber(getInput("Personal Number: "));
+			register.addMember(member);
+			displayMessage("Member added succesfully");
+
 		} catch (Exception e) {
-			displayMessage("you have inserted an invalid persona number");
+			displayMessage("you have inserted an invalid personal number");
 		}
-		register.addMember(m);
-		displayMessage("Member added succesfully");
-		return;
+
+	}
+
+	public void updateMember() throws ParseException {
+
+		Member nw = new Member();
+
+		
+			System.out.print("Insert ID of the member: ");
+			int id = scan.nextInt();
+			while (checkId(id)) {
+				System.out.println("you have inserted out of range value ");
+				System.out.print("Insert ID of the member: ");
+				id = scan.nextInt();
+			}
+
+			nw.setName(getInput("Name: "));
+			try {
+			nw.setPersonalNumber(getInput("Personal Number: "));
+			this.register.updateMember(this.register.getMemberByID(id), nw);
+			displayMessage("Member updated successfully");
+		} catch (Exception e) {
+			displayMessage("you have inserted an invalid personal number");
+		}
+
+	}
+
+	public void deleteMember() {
+		
+		try {
+			System.out.print("Insert ID of the member: ");
+			int id = scan.nextInt();
+			while (checkId(id)) {
+				System.out.println("you have inserted out of range value ");
+				System.out.print("Insert ID of the member: ");
+				id = scan.nextInt();
+			}
+
+			this.register.deleteMember(this.register.getMemberByID(id));
+			displayMessage("Member deleted succesfully");
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings("static-access")
+	public void addBoat() {
+
+		
+		Boat boat = new Boat();
+
+		try {
+			System.out.print("Insert ID of the member: ");
+			int id = scan.nextInt();
+			while (checkId(id)) {
+				System.out.println("you have inserted out of range value ");
+				System.out.print("Insert ID of the member: ");
+				id = scan.nextInt();
+			}
+			System.out.print("Length: ");
+			boat.setBoatLength(scan.nextDouble());
+			System.out.println();
+			System.out.println("Boat Types:");
+			for (int i = 0; i < Boat.BoatType.values().length; i++) {
+				System.out.println(Boat.BoatType.values()[i]);
+			}
+			System.out.println();
+			System.out.print("Type: ");
+			boat.setType(boat.getType().valueOf(scan.next()));
+			this.register.addBoat(this.register.getMemberByID(id),boat);
+			displayMessage("Boat added successfully");
+			
+		} catch (Exception e) {
+			displayMessage("you have inserted an invalid value");
+		}
 	}
 
 	public void displayCompactList() {
-		for (int i = 0; i < register.getMemberList().size(); i++) {
-			System.out.println(register.getMemberList().get(i));
+		if (register.getMemberList().isEmpty())
+			displayMessage("the member list is empty");
+		else {
+			for (int i = 0; i < register.getMemberList().size(); i++) {
+				System.out.println(register.getMemberList().get(i).toString());
+			}
 		}
-		return;
+	}
+
+	public void displayVerboseList() {
+
+		if (register.getMemberList().isEmpty()) {
+			displayMessage("the member list is empty");
+		} else {
+			for (int i = 0; i < register.getMemberList().size(); i++) {
+				System.out.println("Member [ ID:" + register.getMemberList().get(i).getId() + " , Name:"
+						+ register.getMemberList().get(i).getName() + " , PersonalNumber:"
+						+ register.getMemberList().get(i).getPersonalNumber() + " , BoatNumber:"
+						+ register.getMemberList().get(i).getBoatNumber() + "]");
+				if (register.getMemberList().get(i).getBoatList().isEmpty()) {
+					displayMessage("this member has not boat");
+				} else {
+					System.out.println(register.getMemberList().get(i).getBoatList());
+				}
+			}
+
+		}
 	}
 
 	private String getInput(String output) {
@@ -75,8 +209,18 @@ public class View {
 		}
 		return input;
 	}
-	
+
 	private void displayMessage(String msg) {
 		System.out.println("****** " + msg + " *******");
 	}
+
+	private boolean checkId(int id) {
+		for (int i = 0; i < register.getMemberList().size(); i++) {
+			if (register.getMemberList().get(i).getId() == id) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 }

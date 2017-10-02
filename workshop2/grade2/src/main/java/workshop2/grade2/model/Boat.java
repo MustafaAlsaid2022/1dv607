@@ -20,6 +20,11 @@ public class Boat {
 
 	private BoatType type;
 
+	@Override
+	public String toString() {
+		return "Boat [ Length:" +boatLength+ " , Type:" + type + "]";
+	}
+	
 	public double getBoatLength() {
 		return boatLength;
 	}
