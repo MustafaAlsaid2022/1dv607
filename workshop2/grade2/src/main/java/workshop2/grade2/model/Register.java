@@ -7,6 +7,13 @@ import java.util.Comparator;
 import javax.xml.bind.annotation.*;
 import workshop2.grade2.model.Boat;
 
+
+/**
+ * @author Mustafa Alsaid
+ * @version 0.00.00
+ * @name Register.java
+ */
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Register {
