@@ -2,13 +2,19 @@ package workshop2.grade2.view;
 
 import java.text.ParseException;
 import java.util.Scanner;
-
 import workshop2.grade2.io.FileHandler;
 import workshop2.grade2.model.Boat;
 import workshop2.grade2.model.Member;
 import workshop2.grade2.model.Register;
 
-public class View {
+
+/**
+ * @author Mustafa Alsaid
+ * @version 0.00.00
+ * @name View.java
+ */
+
+public class View implements ViewInterface{
 
 	private Register register;
 	private Scanner scan;
