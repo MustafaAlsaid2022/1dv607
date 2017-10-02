@@ -5,16 +5,9 @@
         <name>mustafa</name>
         <personalNumber>8607070556</personalNumber>
         <boat>
+            <id>1</id>
             <boatLength>1.0</boatLength>
             <type>Canoe</type>
-        </boat>
-        <boat>
-            <boatLength>1.0</boatLength>
-            <type>Canoe</type>
-        </boat>
-        <boat>
-            <boatLength>1.0</boatLength>
-            <type>Other</type>
         </boat>
     </member>
 </register>

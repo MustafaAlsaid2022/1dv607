@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import javax.xml.bind.annotation.*;
+import workshop2.grade2.model.Boat;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -21,14 +22,6 @@ public class Register {
 		return memberList;
 	}
 	
-	public Member getMemberByID(int id) throws NullPointerException {
-		for (Member m : this.memberList)
-			if (m.getId()== id)
-				return m;	
-		throw new NullPointerException("you have inserted an invalid id");
-	}
-	
-
 	public int getMemberNumber() {
 		return memberList.size();
 	}

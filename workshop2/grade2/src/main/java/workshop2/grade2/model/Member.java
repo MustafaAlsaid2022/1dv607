@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import javax.xml.bind.annotation.*;
 
 /**
@@ -24,9 +27,6 @@ public class Member {
 		boatList = new ArrayList<Boat>();
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	@Override
 	public String toString() {
@@ -35,6 +35,10 @@ public class Member {
 
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -74,6 +78,7 @@ public class Member {
 	}
 
 	public void addBoat(Boat boat) {
+		boat.setId(getMaxId());
 		boatList.add(boat);
 	}
 
@@ -86,6 +91,18 @@ public class Member {
 	public void deleteBoat(Boat boat) {
 		boatList.remove(boat);
 	}
+	
+	public int getBoatIndex(Boat b) {
+		return boatList.indexOf(b);
+	}
 
+	private int getMaxId() {
+		Collections.sort(this.boatList, new Comparator<Boat>() {
+			public int compare(Boat first, Boat second) {
+				return first.getId() - second.getId();
+			}
+		});
+		return this.boatList.isEmpty() ? 1 : this.boatList.get(this.boatList.size() - 1).getId() + 1;
+	}
 	
 }
