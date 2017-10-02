@@ -78,6 +78,7 @@ public class View implements ViewInterface{
 					new FileHandler().writeXML(register);
 					displayMessage("*** Data saved!! ***");
 				} catch (Exception e) {
+					e.printStackTrace();
 					displayMessage("*** Could not save data!! ***");
 				}
 				break;
