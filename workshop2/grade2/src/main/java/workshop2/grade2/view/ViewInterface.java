@@ -1,5 +1,5 @@
 package workshop2.grade2.view;
 
-public interface BoatView {
+public interface ViewInterface {
 
 }
