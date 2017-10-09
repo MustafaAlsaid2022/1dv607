@@ -1,9 +1,18 @@
 package workshop2.grade2.model;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import javax.xml.bind.annotation.*;
+import workshop2.grade2.model.Boat;
+
+
+/**
+ * @author Mustafa Alsaid
+ * @version 0.00.00
+ * @name Register.java
+ */
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -19,7 +28,7 @@ public class Register {
 	public ArrayList<Member> getMemberList() {
 		return memberList;
 	}
-
+	
 	public int getMemberNumber() {
 		return memberList.size();
 	}
@@ -29,9 +38,10 @@ public class Register {
 		memberList.add(member);
 	}
 
-	public void updateMember(Member old, Member nw) {
+	public void updateMember(Member old, Member nw) throws ParseException {
 		Member member = memberList.get(memberList.indexOf(old));
 		member.setName(nw.getName());
+		member.setPersonalNumber(nw.getPersonalNumber());
 	}
 
 	public void deleteMember(Member member) {

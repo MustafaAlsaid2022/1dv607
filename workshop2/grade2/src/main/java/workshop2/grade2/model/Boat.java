@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Boat {
 
+	
+	private int id;
 	private double boatLength;
 
 	public enum BoatType {
@@ -20,6 +22,19 @@ public class Boat {
 
 	private BoatType type;
 
+	@Override
+	public String toString() {
+		return "Boat [ ID:" + id + " , Length:" + boatLength + " , Type:" + type + "]";
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public double getBoatLength() {
 		return boatLength;
 	}
