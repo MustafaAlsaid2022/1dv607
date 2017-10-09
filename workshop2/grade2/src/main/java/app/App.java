@@ -1,7 +1,8 @@
-package workshop2.grade2;
+package app;
 
-import workshop2.grade2.model.Register;
-import workshop2.grade2.view.View;
+
+import model.Register;
+import view.View;
 
 public class App {
 

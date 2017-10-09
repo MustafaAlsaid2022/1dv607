@@ -1,4 +1,4 @@
-package workshop2.grade2.view;
+package view;
 
 import java.text.ParseException;
 

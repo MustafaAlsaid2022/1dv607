@@ -1,11 +1,12 @@
-package workshop2.grade2.model;
+package model;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import javax.xml.bind.annotation.*;
-import workshop2.grade2.model.Boat;
+
+import model.Boat;
 
 
 /**

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.workshop2</groupId>
-	<artifactId>grade2</artifactId>
+	<artifactId>grade3</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>grade2</name>

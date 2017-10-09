@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<register>
+    <member>
+        <id>1</id>
+        <name>mustafa</name>
+        <personalNumber>8607070556</personalNumber>
+        <boat>
+            <id>1</id>
+            <boatLength>1.0</boatLength>
+            <type>Canoe</type>
+        </boat>
+    </member>
+</register>

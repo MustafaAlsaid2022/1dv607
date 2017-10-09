@@ -1,10 +1,11 @@
-package workshop2.grade2.io;
+package io;
 
 import java.io.File;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import workshop2.grade2.model.Register;
+
+import model.Register;
 
 
 /**

@@ -1,4 +1,4 @@
-package workshop2.grade2.model;
+package model;
 
 import java.text.DateFormat;
 import java.text.ParseException;

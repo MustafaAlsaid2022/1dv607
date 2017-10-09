@@ -1,4 +1,4 @@
-package workshop2.grade2.model;
+package model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
