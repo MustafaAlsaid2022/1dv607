@@ -22,10 +22,7 @@ public class Boat {
 
 	private BoatType type;
 
-	@Override
-	public String toString() {
-		return "Boat [ ID:" + id + " , Length:" + boatLength + " , Type:" + type + "]";
-	}
+	
 	
 	public int getId() {
 		return id;

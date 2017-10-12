@@ -27,12 +27,6 @@ public class Member {
 		boatList = new ArrayList<Boat>();
 	}
 
-
-	@Override
-	public String toString() {
-		return "Member [ ID:" + id + " , Name:" + name + " , PersonalNumber:" + personalNumber + "]";
-	}
-
 	public int getId() {
 		return id;
 	}

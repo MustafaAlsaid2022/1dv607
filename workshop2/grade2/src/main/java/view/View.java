@@ -8,14 +8,13 @@ import model.Boat;
 import model.Member;
 import model.Register;
 
-
 /**
  * @author Mustafa Alsaid
  * @version 0.00.00
  * @name View.java
  */
 
-public class View implements ViewInterface{
+public class View implements ViewInterface {
 
 	private Register register;
 	private Scanner scan;
@@ -56,23 +55,30 @@ public class View implements ViewInterface{
 				break;
 			case "4":
 				displayCompactList();
-				addBoat();
+				if (!register.getMemberList().isEmpty())
+					addBoat();
 				break;
 			case "5":
 				displayVerboseList();
-				updateBoat();
+				if (!register.getMemberList().isEmpty()) {
+					updateBoat();
+				}
+
 				break;
 			case "6":
 				displayVerboseList();
-				deleteBoat();
+				if (!register.getMemberList().isEmpty())
+					deleteBoat();
 				break;
 			case "7":
 				displayCompactList();
-				updateMember();
+				if (!register.getMemberList().isEmpty())
+					updateMember();
 				break;
 			case "8":
 				displayCompactList();
-				deleteMember();
+				if (!register.getMemberList().isEmpty())
+					deleteMember();
 				break;
 			case "9":
 				try {
@@ -106,19 +112,18 @@ public class View implements ViewInterface{
 	}
 
 	public void updateMember() throws ParseException {
-
 		Member nw = new Member();
-
 		System.out.print("Insert ID of the member: ");
-		int id = scan.nextInt();
-		while (checkMemberId(id)) {
-			System.out.println("you have inserted out of range value ");
-			System.out.print("Insert ID of the member: ");
-			id = scan.nextInt();
-		}
-
-		nw.setName(getInput("Name: "));
 		try {
+			int id = scan.nextInt();
+			while (checkMemberId(id)) {
+				displayMessage("you have inserted out of range value ");
+				System.out.print("Insert ID of the member: ");
+				id = scan.nextInt();
+			}
+
+			nw.setName(getInput("Name: "));
+
 			nw.setPersonalNumber(getInput("Personal Number: "));
 			this.register.updateMember(getMemberByID(id), nw);
 			displayMessage("Member updated successfully");
@@ -134,15 +139,15 @@ public class View implements ViewInterface{
 			System.out.print("Insert ID of the member: ");
 			int id = scan.nextInt();
 			while (checkMemberId(id)) {
-				System.out.println("you have inserted out of range value ");
+				displayMessage("you have inserted out of range value ");
 				System.out.print("Insert ID of the member: ");
 				id = scan.nextInt();
 			}
 
 			this.register.deleteMember(getMemberByID(id));
 			displayMessage("Member deleted succesfully");
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			displayMessage("you have inserted out of range value ");
 		}
 	}
 
@@ -155,7 +160,7 @@ public class View implements ViewInterface{
 			System.out.print("Insert ID of the member: ");
 			int id = scan.nextInt();
 			while (checkMemberId(id)) {
-				System.out.println("you have inserted out of range value ");
+				displayMessage("you have inserted out of range value ");
 				System.out.print("Insert ID of the member: ");
 				id = scan.nextInt();
 			}
@@ -190,11 +195,14 @@ public class View implements ViewInterface{
 				System.out.print("Insert ID of the member: ");
 				id = scan.nextInt();
 			}
-
+			if (register.getMemberList().get(register.getMemberIndex(getMemberByID(id))).getBoatList().isEmpty()) {
+				displayMessage("this member has not a boat");
+				return;
+			}
 			System.out.print("Insert ID of the boat: ");
 			int boatId = scan.nextInt();
 			while (checkBoatId(id, boatId)) {
-				System.out.println("you have inserted out of range value ");
+				displayMessage("you have inserted out of range value ");
 				System.out.print("Insert ID of the boat: ");
 				boatId = scan.nextInt();
 			}
@@ -222,19 +230,24 @@ public class View implements ViewInterface{
 	public void deleteBoat() {
 
 		try {
-			System.out.print("Insert ID of the member: ");
+			displayMessage("Insert ID of the member: ");
 			int id = scan.nextInt();
 			while (checkMemberId(id)) {
-				System.out.println("you have inserted out of range value ");
-				System.out.print("Insert ID of the member: ");
+				displayMessage("you have inserted out of range value ");
+				displayMessage("Insert ID of the member: ");
 				id = scan.nextInt();
+			}
+
+			if (register.getMemberList().get(register.getMemberIndex(getMemberByID(id))).getBoatList().isEmpty()) {
+				displayMessage("this member has not a boat");
+				return;
 			}
 
 			System.out.print("Insert ID of the boat: ");
 			int boatId = scan.nextInt();
 			while (checkBoatId(id, boatId)) {
-				System.out.println("you have inserted out of range value ");
-				System.out.print("Insert ID of the boat: ");
+				displayMessage("you have inserted out of range value ");
+				displayMessage("Insert ID of the boat: ");
 				boatId = scan.nextInt();
 			}
 
@@ -250,7 +263,10 @@ public class View implements ViewInterface{
 			displayMessage("the member list is empty");
 		else {
 			for (int i = 0; i < register.getMemberList().size(); i++) {
-				System.out.println(register.getMemberList().get(i).toString());
+				displayMessage("Member [ ID:" + register.getMemberList().get(i).getId() + " , Name:"
+						+ register.getMemberList().get(i).getName() + " , PersonalNumber:"
+						+ register.getMemberList().get(i).getPersonalNumber() + "]");
+				;
 			}
 		}
 	}
@@ -261,17 +277,20 @@ public class View implements ViewInterface{
 			displayMessage("the member list is empty");
 		} else {
 			for (int i = 0; i < register.getMemberList().size(); i++) {
-				System.out.println("Member [ ID:" + register.getMemberList().get(i).getId() + " , Name:"
+				displayMessage("Member [ ID:" + register.getMemberList().get(i).getId() + " , Name:"
 						+ register.getMemberList().get(i).getName() + " , PersonalNumber:"
 						+ register.getMemberList().get(i).getPersonalNumber() + " , BoatNumber:"
 						+ register.getMemberList().get(i).getBoatNumber() + "]");
 				if (register.getMemberList().get(i).getBoatList().isEmpty()) {
 					displayMessage("this member has not boat");
 				} else {
-					System.out.println(register.getMemberList().get(i).getBoatList());
+					for (int j = 0; j < register.getMemberList().get(i).getBoatList().size(); j++) {
+						displayMessage("Boat [ ID:" + register.getMemberList().get(i).getBoatList().get(j).getId()
+								+ " , Length:" + register.getMemberList().get(i).getBoatList().get(j).getBoatLength()
+								+ " , Type:" + register.getMemberList().get(i).getBoatList().get(j).getType() + "]");
+					}
 				}
 			}
-
 		}
 	}
 
@@ -305,6 +324,7 @@ public class View implements ViewInterface{
 					.getId() == id) {
 				return false;
 			}
+
 		}
 		return true;
 	}
