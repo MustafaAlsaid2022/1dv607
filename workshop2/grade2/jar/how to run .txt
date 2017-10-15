@@ -1,2 +1,0 @@
-Open cmd and write java -jara path
-Ex:C:\Users\steven>java -jar C:\Users\steven\Desktop\grade2.jar
