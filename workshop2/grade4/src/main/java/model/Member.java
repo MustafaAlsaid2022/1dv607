@@ -3,7 +3,6 @@ package model;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,8 +49,8 @@ public class Member {
 	}
 
 	public void setPersonalNumber(String personalNumber) throws ParseException  {
-		String firstPart = personalNumber.substring(0, 8);
-		DateFormat df = new SimpleDateFormat("yyyyMMdd");
+		String firstPart = personalNumber.substring(0, 6);
+		DateFormat df = new SimpleDateFormat("yyMMdd");
 		df.setLenient(false);
 		df.parse(firstPart);
 
@@ -98,13 +97,6 @@ public class Member {
 			}
 		});
 		return this.boatList.isEmpty() ? 1 : this.boatList.get(this.boatList.size() - 1).getId() + 1;
-	}
-	
-	public int getBirthYear() {
-		return Integer.parseInt(personalNumber.substring(0, 4));
-	}
-	public int getAge() {
-		return Year.now().getValue()-getBirthYear();
 	}
 	
 }
