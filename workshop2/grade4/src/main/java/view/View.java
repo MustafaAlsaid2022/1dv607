@@ -1,12 +1,17 @@
 package view;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Scanner;
 
 import io.FileHandler;
 import model.Boat;
 import model.Member;
 import model.Register;
+import model.Search.AndSearch;
+import model.Search.ISearch;
+import model.Search.MemberAge;
+import model.Search.MemberName;
 
 /**
  * @author Mustafa Alsaid
@@ -14,15 +19,13 @@ import model.Register;
  * @name View.java
  */
 
-public class View implements ViewInterface {
+public class View  {
 
 	private Register register;
 	private Scanner scan;
 	private final String login = "ADMIN";
 	private final String pass = "PASSWORD";
 	private boolean logged_in = false;
-
-
 
 	public View() {
 		try {
@@ -34,7 +37,7 @@ public class View implements ViewInterface {
 	}
 
 	public void start() throws ParseException {
-		
+
 		loggin();
 		while (true) {
 
@@ -48,6 +51,8 @@ public class View implements ViewInterface {
 			System.out.println("press 7 for updating a member");
 			System.out.println("press 8 for deleting a member");
 			System.out.println("press 9 to save data");
+			System.out.println("press s for simple search");
+			System.out.println("press c for complex search");
 			System.out.print("Press q for quit\n>");
 			String input = scan.next();
 			switch (input) {
@@ -110,12 +115,89 @@ public class View implements ViewInterface {
 				break;
 			case "q":
 				System.exit(1);
+			case "s":
+				simpleSearch();
+			case "c":
+				complexSearch();
+				break;
 			default:
 				displayMessage("you have inserted an invalid value");
 			}
 		}
 	}
 
+	public void simpleSearch() {
+		while (true) {
+			System.out.println("Press 1 for search by name");
+			System.out.println("Press 2 for search by age");
+			String input = scan.next();
+			switch (input) {
+			case "1":
+				searchName();
+				break;
+			case "2":
+				searchAge();
+				break;
+			default:
+				displayMessage("you have inserted an invalid value");
+			}
+		}
+	}
+	public void complexSearch() {
+		System.out.print("insert the name: ");
+		String input1 = scan.next();
+		ISearch search1 = new MemberName(input1);
+		System.out.print("insert the age: ");
+		int input2 = scan.nextInt();
+		ISearch search2 = new MemberAge(input2);
+		ISearch search3=new AndSearch (search1, search2);
+		search3.meetCriteria(register.getMemberList());
+		if (search3.meetCriteria(register.getMemberList()).isEmpty())
+			displayMessage("the member list is empty");
+		else {
+			for (int i = 0; i < search3.meetCriteria(register.getMemberList()).size(); i++) {
+				displayMessage("Member [ ID:" + search3.meetCriteria(register.getMemberList()).get(i).getId() + " , Name:"
+						+ search3.meetCriteria(register.getMemberList()).get(i).getName()  + " , PersonalNumber:"
+						+ search3.meetCriteria(register.getMemberList()).get(i).getPersonalNumber() + "]");
+
+			}
+		
+		}
+	}
+
+	public void searchName() {
+		System.out.print("insert the name you to seach for: ");
+		String input = scan.next();
+		ISearch search = new MemberName(input);
+		if (search.meetCriteria(register.getMemberList()).isEmpty())
+			displayMessage("the member list is empty");
+		else {
+			for (int i = 0; i < search.meetCriteria(register.getMemberList()).size(); i++) {
+				displayMessage("Member [ ID:" + search.meetCriteria(register.getMemberList()).get(i).getId() + " , Name:"
+						+ search.meetCriteria(register.getMemberList()).get(i).getName()  + " , PersonalNumber:"
+						+ search.meetCriteria(register.getMemberList()).get(i).getPersonalNumber() + "]");
+
+			}
+		}
+	}
+    
+	public void searchAge() {
+		System.out.print("insert the age you to seach for: ");
+		int input = scan.nextInt();
+		ISearch search = new MemberAge(input);
+		if (search.meetCriteria(register.getMemberList()).isEmpty())
+			displayMessage("the member list is empty");
+		else {
+			for (int i = 0; i < search.meetCriteria(register.getMemberList()).size(); i++) {
+				displayMessage("Member [ ID:" + search.meetCriteria(register.getMemberList()).get(i).getId() + " , Name:"
+						+ search.meetCriteria(register.getMemberList()).get(i).getName()  + " , PersonalNumber:"
+						+ search.meetCriteria(register.getMemberList()).get(i).getPersonalNumber() + "]");
+
+			}
+		}
+	}
+	
+	
 	public void addMember() {
 		Member member = new Member();
 		member.setName(getInput("Name: "));
@@ -313,7 +395,7 @@ public class View implements ViewInterface {
 
 		}
 	}
-	
+
 	private boolean isConnected() {
 		if (!this.logged_in) {
 			System.err.println("You can't access to this command.\nYou need to be logged in.");
@@ -322,19 +404,16 @@ public class View implements ViewInterface {
 		return true;
 	}
 
-	
 	private void loggin() {
 		int attempt = 0;
 		String _pass_, _log_;
 		String __choice__;
 		System.out.print("Do you want to be logged in by using ADMIN/PASSWORD (yes/no)?: ");
 		__choice__ = this.scan.next();
-		if (!__choice__.equals("yes"))
-		{
+		if (!__choice__.equals("yes")) {
 			System.out.println("You are not connected");
 			return;
 		}
-			
 
 		while (attempt < 5) {
 			if (attempt > 0)
@@ -353,8 +432,6 @@ public class View implements ViewInterface {
 		}
 	}
 
-	
-	
 	private String getInput(String output) {
 		String input = "";
 		while (input.trim().isEmpty()) {
