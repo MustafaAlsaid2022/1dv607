@@ -35,7 +35,7 @@ public class View {
 	}
 
 	public void start() throws ParseException {
-
+        if(logged_in==false)
 		loggin();
 		while (true) {
 
@@ -114,16 +114,18 @@ public class View {
 				System.exit(1);
 			case "s":
 				simpleSearch();
+				break;
 			default:
 				displayMessage("you have inserted an invalid value");
 			}
 		}
 	}
 
-	public void simpleSearch() {
+	public void simpleSearch() throws ParseException {
 		while (true) {
 			System.out.println("Press 1 for search by name");
 			System.out.println("Press 2 for search by age");
+			System.out.println("Press 3 to go back to main menu");
 			String input = scan.next();
 			switch (input) {
 			case "1":
@@ -132,45 +134,56 @@ public class View {
 			case "2":
 				searchAge();
 				break;
-			default:
-				displayMessage("you have inserted an invalid value");
+			case"3":
+				start();
+				break;
 			}
 		}
 	}
 
 	public void searchName() {
 		System.out.print("insert the name you to seach for: ");
+		try {
 		String input = scan.next();
 		ISearch search = new MemberName(input);
-		if (register.getMemberList().isEmpty())
-			displayMessage("the member list is empty");
+		if (search.meetCriteria(register.getMemberList()).isEmpty())
+			displayMessage("there is no member his name starts with this");
 		else {
 			for (int i = 0; i < search.meetCriteria(register.getMemberList()).size(); i++) {
-				displayMessage("Member [ ID:" + search.meetCriteria(register.getMemberList()).get(i).getId() + " , Name:"
-						+ search.meetCriteria(register.getMemberList()).get(i).getName()  + " , PersonalNumber:"
-						+ search.meetCriteria(register.getMemberList()).get(i).getPersonalNumber() + "]");
+				displayMessage(
+						"Member [ ID:" + search.meetCriteria(register.getMemberList()).get(i).getId() + " , Name:"
+								+ search.meetCriteria(register.getMemberList()).get(i).getName() + " , PersonalNumber:"
+								+ search.meetCriteria(register.getMemberList()).get(i).getPersonalNumber() + "]");
 
 			}
 		}
+		}catch(Exception e) {
+			displayMessage("you have inserted an invalid value");
+		}
 	}
-    
+
 	public void searchAge() {
-		System.out.print("insert the age you to seach for: ");
-		int input = scan.nextInt();
-		ISearch search = new MemberAge(input);
-		if (register.getMemberList().isEmpty())
-			displayMessage("the member list is empty");
-		else {
-			for (int i = 0; i < search.meetCriteria(register.getMemberList()).size(); i++) {
-				displayMessage("Member [ ID:" + search.meetCriteria(register.getMemberList()).get(i).getId() + " , Name:"
-						+ search.meetCriteria(register.getMemberList()).get(i).getName()  + " , PersonalNumber:"
-						+ search.meetCriteria(register.getMemberList()).get(i).getPersonalNumber() + "]");
 
+		System.out.print("insert the age you to seach for: ");
+		try {
+			String input = scan.next();
+			ISearch search = new MemberAge(Integer.parseInt(input));
+			if (search.meetCriteria(register.getMemberList()).isEmpty())
+				displayMessage("There is no member with this age");
+			else {
+				for (int i = 0; i < search.meetCriteria(register.getMemberList()).size(); i++) {
+					displayMessage("Member [ ID:" + search.meetCriteria(register.getMemberList()).get(i).getId()
+							+ " , Name:" + search.meetCriteria(register.getMemberList()).get(i).getName()
+							+ " , PersonalNumber:"
+							+ search.meetCriteria(register.getMemberList()).get(i).getPersonalNumber() + "]");
+
+				}
 			}
+		} catch (Exception e) {
+			displayMessage("you have inserted an invalid value");
 		}
 	}
-	
-	
+
 	public void addMember() {
 		Member member = new Member();
 		member.setName(getInput("Name: "));
