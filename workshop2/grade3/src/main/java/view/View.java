@@ -137,6 +137,8 @@ public class View {
 			case"3":
 				start();
 				break;
+			default:
+				displayMessage("you have inserted an invalid value");
 			}
 		}
 	}
