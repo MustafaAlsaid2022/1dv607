@@ -13,7 +13,8 @@ public class PlayGame {
 		a_view.DisplayBuffer();
 		
 		if (a_game.IsGameOver()) {
-			a_view.DisplayGameOver(a_game.IsDealerWinner());
+	
+			a_view.DisplayGameOver(a_game.ComputeRes());
 		}
 
 		int input = a_view.GetInput();

@@ -3,6 +3,8 @@ package model;
 import java.util.List;
 
 import controller.Observable;
+import controller.PlayerWinHandler;
+import controller.WinHandler;
 
 import java.util.LinkedList;
 
@@ -10,15 +12,16 @@ public class Player {
 
 	private List<Card> m_hand;
 	protected final int g_maxScore = 21;
-	Observable o_obs;
+	WinHandler m_win_handler;
 
 	public Player() {
 		m_hand = new LinkedList<Card>();
 		System.out.println("Hello List World");
+		m_win_handler = new PlayerWinHandler(this.g_maxScore);
 	}
 
-	public void assignObservable(Observable o) {
-		this.o_obs = o;
+	public WinHandler getWinHandler() {
+		return this.m_win_handler;
 	}
 
 	public boolean hadAnAce() {
@@ -28,10 +31,7 @@ public class Player {
 		return false;
 	}
 
-	public void notify(String message) {
-		o_obs.notify(message);
 
-	}
 
 	public void pickACard(Deck d, boolean show) {
 		Card c = d.GetCard();

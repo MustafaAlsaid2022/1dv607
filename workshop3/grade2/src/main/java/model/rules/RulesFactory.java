@@ -3,7 +3,7 @@ package model.rules;
 public class RulesFactory {
 
   public IHitStrategy GetHitRule() {
-    return new BasicHitStrategy();
+    return new SoftSevenTeenStrategy();
   }
 
   public INewGameStrategy GetNewGameRule() {
